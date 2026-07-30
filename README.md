@@ -65,8 +65,8 @@ research-workflow/
 │   ├── mcp-config.md
 │   └── ...
 ├── docs/            設計文書
-│   ├── notion-db-design.md
-│   └── resources-prefix-table.md
+│   ├── notion-db-design.md         — Notion 3-DB 設計（研究管理・決定記録・実験記録）
+│   └── resources-prefix-table.md   — 全リソース番号体系（14 Prefix、命名ルール）
 └── LICENSE
 ```
 
