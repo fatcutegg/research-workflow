@@ -3,6 +3,9 @@ name: 07-presentation
 description: 発表資料を作成する。Anthropic PPTX skill を使用し、テンプレート管理と逐頁討論を行う。
 mode: collaborative
 language: ja
+license: MIT
+metadata:
+  version: "v0.0.1"
 ---
 
 # 発表資料作成

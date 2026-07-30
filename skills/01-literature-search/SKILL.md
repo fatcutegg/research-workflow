@@ -3,6 +3,9 @@ name: 01-literature-search
 description: HAR・IMU・足底圧力センサ関連の論文を検索・スクリーニング・管理する。
 mode: collaborative
 language: ja
+license: MIT
+metadata:
+  version: "v0.0.1"
 ---
 
 # 文献検索

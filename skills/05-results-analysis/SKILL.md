@@ -3,6 +3,9 @@ name: 05-results-analysis
 description: 実験結果を比較・分析・可視化する。04 のデータを読み込み、新たな図や表を生成する。
 mode: collaborative
 language: ja
+license: MIT
+metadata:
+  version: "v0.0.1"
 ---
 
 # 結果分析・可視化

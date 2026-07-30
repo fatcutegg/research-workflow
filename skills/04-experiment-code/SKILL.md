@@ -3,6 +3,9 @@ name: 04-experiment-code
 description: 実験コードを ipynb に記述し、subagentで実行する。スナップショットを保存する。
 mode: collaborative
 language: ja
+license: MIT
+metadata:
+  version: "v0.0.1"
 ---
 
 # 実験コーディング

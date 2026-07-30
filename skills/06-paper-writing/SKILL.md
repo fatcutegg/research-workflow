@@ -3,6 +3,9 @@ name: 06-paper-writing
 description: 論文の構成を討論し、各セクションをインクリメンタルに執筆する。引用準備も行う。
 mode: collaborative
 language: ja
+license: MIT
+metadata:
+  version: "v0.0.1"
 ---
 
 # 論文執筆

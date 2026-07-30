@@ -3,6 +3,9 @@ name: 03-experiment-design
 description: 実験計画をあなたと討論し、合意後に実験ディレクトリを作成する。
 mode: collaborative
 language: ja
+license: MIT
+metadata:
+  version: "v0.0.1"
 ---
 
 # 実験設計

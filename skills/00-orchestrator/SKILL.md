@@ -1,8 +1,11 @@
 ---
-name: research-orchestrator
+name: 00-orchestrator
 description: 研究ワークフロー全体を統括する。状態管理とルーティングを行う。
 mode: collaborative
 language: ja
+license: MIT
+metadata:
+  version: "v0.0.1"
 ---
 
 # 研究オーケストレーター

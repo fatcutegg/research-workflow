@@ -3,6 +3,9 @@ name: 02-paper-reading
 description: 論文を読み、研究との関連性を分析する。Part1 で要約、Part2 で深掘りする。
 mode: collaborative
 language: ja
+license: MIT
+metadata:
+  version: "v0.0.1"
 ---
 
 # 論文精読
