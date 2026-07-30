@@ -1,0 +1,28 @@
+# 研究プロジェクト状態管理
+# 00-orchestrator が管理する。各 stage 完了時に更新する。
+
+last_updated: {YYYY-MM-DD}
+current_stage: null
+status: idle  # idle / discussing / executing / reviewing
+subagent: agy
+
+experiments: []
+
+paper_status:
+  PR-01-introduction: not_started
+  PR-02-related-work: not_started
+  PR-03-method: not_started
+  PR-04-experiments: not_started
+  PR-05-discussion: not_started
+
+resource_counters:
+  EXP: 0
+  DC: 0
+  LN: 0
+  TE: 0
+  EQ: 0
+  RL: 0
+  FG: 0
+  TB: 0
+  LG: 0
+  PS: 0

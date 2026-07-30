@@ -134,17 +134,16 @@ agent: 「以下の初期化を行います：
    1. research/ ディレクトリを作成
    2. state.yaml を初期化
    3. conda env research-your-har-project を作成
-   4. research/requirements.txt を作成（最小構成）
+   4. templates/requirements.txt を research/requirements.txt にコピー（最小構成）
    5. research/literature/ ディレクトリを作成
    6. templates/.gitignore を research/.gitignore にコピー（Git 管理外ファイルを設定）
    7. templates/manifest.md を research/manifest.md にコピー（外部ストレージ管理台帳）
    8. templates/data/manifest-data.md を research/data/manifest-data.md にコピー（raw data 管理台帳）
    9. templates/prompts/subagent-summary-prompt.md を research/literature/prompts/ にコピー
-   10. templates/state.yaml を research/state.yaml にコピー
-   
-   11. サブエージェント（subagent）を指定しますか？
-   デフォルト: agy（Antigravity CLI）
-   そのまま進めて良いですか？」
+    10. templates/state.yaml を research/state.yaml にコピー
+    11. サブエージェント（subagent）を指定しますか？
+    デフォルト: agy（Antigravity CLI）
+    そのまま進めて良いですか？」
 
    あなた：「はい」
 

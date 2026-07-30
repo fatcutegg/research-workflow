@@ -1,0 +1,9 @@
+# 研究プロジェクト最小構成
+# 必要に応じて追加する（04 で実験固有の依存も管理）
+
+torch>=2.0
+numpy
+matplotlib
+scikit-learn
+jupyter
+ipykernel
