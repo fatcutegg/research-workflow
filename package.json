@@ -1,0 +1,39 @@
+{
+  "name": "research-workflow",
+  "version": "0.1.0",
+  "description": "協調型 AI エージェントで進める研究ワークフロー — 8 SKILL.md + templates + CLI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fatcutegg/research-workflow.git"
+  },
+  "homepage": "https://github.com/fatcutegg/research-workflow#readme",
+  "bugs": {
+    "url": "https://github.com/fatcutegg/research-workflow/issues"
+  },
+  "keywords": [
+    "opencode",
+    "skill",
+    "research",
+    "workflow",
+    "har",
+    "machine-learning",
+    "skill-md"
+  ],
+  "type": "module",
+  "bin": {
+    "research-workflow": "cli.js"
+  },
+  "files": [
+    "cli.js",
+    "skills/",
+    "templates/",
+    "docs/",
+    "install.sh",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

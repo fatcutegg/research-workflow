@@ -33,11 +33,32 @@ IMU・足圧センサを用いた HAR 研究を想定して設計されていま
 
 ## インストール
 
-```bash
-# リポジトリをクローン
-git clone https://github.com/fatcutegg/research-workflow.git ~/Projects/research-workflow
+### 方法 1: npx（推奨）
 
-# SKILL を使用する agent のパスにシンボリックリンク
+```bash
+# プロジェクトローカル（.opencode/skills/）
+npx research-workflow init
+
+# グローバル（~/.config/opencode/skills/）
+npx research-workflow init --global
+
+# シンボリックリンクでインストール（更新を自動反映）
+npx research-workflow init --global --symlink
+```
+
+### 方法 2: install.sh
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/fatcutegg/research-workflow/main/install.sh | bash
+
+# シンボリックリンク版
+curl -fsSL https://raw.githubusercontent.com/fatcutegg/research-workflow/main/install.sh | bash -s -- --symlink
+```
+
+### 方法 3: git clone + 手動設定
+
+```bash
+git clone https://github.com/fatcutegg/research-workflow.git ~/Projects/research-workflow
 mkdir -p ~/.agents/skills
 ln -s ~/Projects/research-workflow/skills/0* ~/.agents/skills/
 ```
