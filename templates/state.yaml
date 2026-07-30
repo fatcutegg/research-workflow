@@ -3,6 +3,7 @@
 
 last_updated: {YYYY-MM-DD}
 current_stage: null
+agent_platform: opencode  # opencode / omp
 status: idle  # idle / discussing / executing / reviewing
 subagent: agy
 

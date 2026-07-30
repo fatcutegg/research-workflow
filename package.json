@@ -1,6 +1,6 @@
 {
   "name": "research-workflow",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "協調型 AI エージェントで進める研究ワークフロー — 8 SKILL.md + templates + CLI",
   "license": "MIT",
   "repository": {
@@ -13,6 +13,8 @@
   },
   "keywords": [
     "opencode",
+    "oh-my-pi",
+    "omp",
     "skill",
     "research",
     "workflow",

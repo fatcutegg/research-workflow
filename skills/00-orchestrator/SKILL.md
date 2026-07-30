@@ -59,6 +59,7 @@ experiments/EXP-{番号}/requirements.txt  ← 実験個別（04 が管理）
 ```yaml
 last_updated: 2026-07-29
 current_stage: null
+agent_platform: opencode  # opencode / omp
 status: idle  # idle / discussing / executing / reviewing
 subagent: agy  # 全 stage で使用する subagent（初期化時に指定）
 
@@ -141,21 +142,34 @@ agent: 「以下の初期化を行います：
    8. templates/data/manifest-data.md を research/data/manifest-data.md にコピー（raw data 管理台帳）
    9. templates/prompts/subagent-summary-prompt.md を research/literature/prompts/ にコピー
     10. templates/state.yaml を research/state.yaml にコピー
-    11. サブエージェント（subagent）を指定しますか？
-    デフォルト: agy（Antigravity CLI）
-    そのまま進めて良いですか？」
+    11. メイン agent のプラットフォームはどちらですか？（デフォルト: opencode）
+    A: OpenCode
+    B: OMP（Oh My Pi）
+
+   あなた：「B」
+
+   agent: 「承知しました。state.yaml に agent_platform: omp を設定します。
+
+    12. サブエージェント（subagent）を指定しますか？
+     現在の設定:
+       - omp → task tool + agy-agent / opencode-agent（task の子 session が delegate CLI を呼ぶ）
+       - opencode → agy CLI（agy -p / agy MCP）
+     デフォルト: opencode（変更する場合は agent 名を教えてください）
+     そのまま進めて良いですか？」
 
    あなた：「はい」
 
-   agent: 「承知しました。state.yaml に subagent: agy を設定します。
+   agent: 「承知しました。state.yaml に subagent: opencode を設定します。
+
+   agent_platform に応じて subagent の発行方法が変わります：
+   - omp → task({agent: "agy-agent"}) または task({agent: "opencode-agent"})
+   - opencode → agy -p または opencode run
 
    利用可能な MCP ツールを確認しています...
-   
-   メイン agent（OpenCode）:
-   - paper-search MCP  ✅（論文検索・PDF取得）
-   - notion MCP        ✅（Notion DB 同期）
-   - github MCP        ✅（Git 操作）
-   - discord MCP       ✅（研究外）
+    
+   メイン agent のプラットフォームに応じた MCP 設定を確認してください。
+   - OpenCode: research/mcp/opencode.md
+   - OMP: research/mcp/omp.md
    
    subagent（agy）:
    - paper-search MCP  ✅（~/.gemini/config/mcp_config.json）
@@ -168,8 +182,8 @@ agent: 「以下の初期化を行います：
 
    あなた：「discord は不要」
 
-   agent: 「承知しました。research/mcp-config.md に記録します。
-   
+   agent: 「承知しました。research/mcp/ に対応する MCP 設定を記録します。
+
    また、共通で使用するライブラリをインストールしますか？
    （例：PyTorch, matplotlib, numpy, jupyter, scikit-learn 等）
 
@@ -211,8 +225,8 @@ agent: 「以下の初期化を行います：
 | 「論文を書きたい」「セクションを追加」「文章を直して」 | 06-paper-writing |
 | 「発表資料を作って」「スライドを生成して」 | 07-presentation |
 | 「初期化して」「新しい研究を始めたい」 | 初期化フロー |
-| 「subagent を変更したい」 | subagent 設定表示 |
-| 「MCP を変更したい」「mcp-config を編集」 | research/mcp-config.md 編集 |
+| 「subagent を変更したい」 | subagent 設定表示＋agent_platform に応じた説明 |
+| 「MCP を変更したい」「mcp-config を編集」 | research/mcp/ の該当ファイルを参照 |
 | 「今どこ？」「次は？」「状況を確認したい」 | 状態表示のみ |
 
 複数の意図が含まれる場合は、ユーザーに確認して優先順位を決めてから委譲します。
@@ -225,6 +239,8 @@ agent: 「以下の初期化を行います：
 現在の状況をお伝えします。
 
 進行中: （なし／討論中／実行中）
+プラットフォーム: opencode / omp
+subagent: agy / opencode
 実行済み実験: EXP-001（baseline CNN）, EXP-002（attention layer）
 論文の進捗: introduction（下書き完了）, related_work（アウトライン）
 
@@ -295,3 +311,4 @@ agent: 「承知しました。03-experiment-design に移ります。」
 - orchestrator 自身は具体的な作業を一切行わない（委譲のみを行う）
 - 不確かな情報を「確か」と表現してはならない
 - Direction Check なしに方向性を確定してはならない
+- agent_platform（opencode/omp）を確認せずに subagent 発行方法を決めてはならない

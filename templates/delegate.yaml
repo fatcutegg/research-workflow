@@ -1,0 +1,12 @@
+# delegate 設定
+# 各外部 agent CLI の呼び出しコマンドテンプレート
+# {brief} は task で与えられた指示に置換される
+
+agents:
+  agy:
+    command: agy -p "{brief}" --model gemini-3.6-flash-medium
+    description: マルチモーダル（PDF/図/動画対応）
+
+  opencode:
+    command: opencode run "{brief}" --model opencode-go/deepseek-v4-flash --auto
+    description: コード生成（DeepSeek 非マルチモーダル）

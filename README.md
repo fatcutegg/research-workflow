@@ -28,31 +28,39 @@ IMU・足圧センサを用いた HAR 研究を想定して設計されていま
 ## 前提環境
 
 - Python（conda 環境管理）
-- AI coding agent: OpenCode / Claude Code / 等（`~/.agents/skills/` をサポートするもの）
-- subagent（agy 推奨）
+- AI coding agent: OpenCode / OMP（Oh My Pi）/ Claude Code 等
+- subagent: agy（マルチモーダル） / opencode（コード生成） / 両方
 
 ## インストール
 
 ### 方法 1: npx（推奨）
 
 ```bash
-# プロジェクトローカル（.opencode/skills/）
+# OpenCode 用（.opencode/skills/）
 npx research-workflow init
 
-# グローバル（~/.config/opencode/skills/）
-npx research-workflow init --global
+# OMP 用（.agents/skills/ + .omp/agents/）
+npx research-workflow init --omp
 
-# シンボリックリンクでインストール（更新を自動反映）
-npx research-workflow init --global --symlink
+# グローバル
+npx research-workflow init --global
+npx research-workflow init --omp --global
+
+# シンボリックリンク
+npx research-workflow init --omp --symlink
 ```
 
 ### 方法 2: install.sh
 
 ```bash
+# OpenCode 用
 curl -fsSL https://raw.githubusercontent.com/fatcutegg/research-workflow/main/install.sh | bash
 
+# OMP 用
+curl -fsSL https://raw.githubusercontent.com/fatcutegg/research-workflow/main/install.sh | bash -s -- --omp
+
 # シンボリックリンク版
-curl -fsSL https://raw.githubusercontent.com/fatcutegg/research-workflow/main/install.sh | bash -s -- --symlink
+curl -fsSL https://raw.githubusercontent.com/.../install.sh | bash -s -- --omp --symlink
 ```
 
 ### 方法 3: git clone + 手動設定
@@ -82,8 +90,16 @@ research-workflow/
 ├── templates/       プロジェクト初期化用雛形
 │   ├── .gitignore
 │   ├── state.yaml
+│   ├── delegate.yaml
 │   ├── manifest.md
-│   ├── mcp-config.md
+│   ├── mcp/
+│   │   ├── opencode.md          — OpenCode 用 MCP 設定
+│   │   └── omp.md               — OMP 用 MCP 設定
+│   ├── agents/
+│   │   ├── agy-agent.md         — agy CLI ラッパー agent
+│   │   └── opencode-agent.md    — opencode CLI ラッパー agent
+│   ├── data/
+│   ├── prompts/
 │   └── ...
 ├── docs/            設計文書
 │   ├── notion-db-design.md         — Notion 3-DB 設計（研究管理・決定記録・実験記録）
