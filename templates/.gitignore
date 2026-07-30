@@ -1,0 +1,24 @@
+# Git 管理外ファイル（外部ストレージに保存）
+# 詳細は research/manifest.md 参照
+
+# 論文 PDF
+literature/papers/*.pdf
+
+# 生データ（不変、プライバシーのため外部ストレージにも非保存）
+data/raw/
+data/processed/
+
+# 実験結果・ログ・スナップショット
+experiments/*/results/
+experiments/*/logs/
+experiments/*/snapshots/
+
+# 発表資料
+presentations/*.pptx
+
+# Python
+__pycache__/
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
