@@ -4,7 +4,7 @@
 
 agents:
   agy:
-    command: agy -p "{brief}" --model gemini-3.6-flash-medium
+    command: agy -p "{brief}" --model gemini-3.6-flash-medium --add-dir "{workdir}"
     description: マルチモーダル（PDF/図/動画対応）
 
   opencode:

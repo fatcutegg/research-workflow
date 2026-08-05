@@ -15,10 +15,11 @@ blocking: false
 
 1. `research/delegate.yaml` を読み、`agents.agy.command` のテンプレートを取得する
 2. テンプレート内の `{brief}` を task の指示で置換する
-3. `bash` で実行する
-4. agy が JSON 形式で出力を返す場合、必ず `read` ツールでファイルを確認する。
+3. テンプレート内の `{workdir}` を `pwd` の出力（現在の作業ディレクトリ）で置換する
+4. `bash` で実行する
+5. agy が JSON 形式で出力を返す場合、必ず `read` ツールでファイルを確認する。
    agy が標準テキストを返す場合は、出力内容をそのまま返す
-5. 結果を主 agent に返す
+6. 結果を主 agent に返す
 
 ## エラー時の挙動
 
