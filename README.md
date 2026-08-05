@@ -31,6 +31,14 @@ IMU・足圧センサを用いた HAR 研究を想定して設計されていま
 - AI coding agent: OpenCode / OMP（Oh My Pi）/ Claude Code 等
 - subagent: agy（マルチモーダル） / opencode（コード生成） / 両方
 
+### OMP の非同期サブエージェント（推奨設定）
+
+OMP で `task` tool を使う場合、subagent は**バックグラウンド実行**され、会話を妨げません。
+
+- **設定**: `async.enabled: true`（OMP 公式設定。`omp config get async.enabled` で確認）
+- **同期が必要なタスク**: 結果が次のステップの入力になる場合のみ `blocking: true` の agent を使う
+- **詳細**: プロジェクト初期化後の `research/mcp/omp.md` を参照
+
 ## インストール
 
 ### 方法 1: npx（推奨）
@@ -96,8 +104,9 @@ research-workflow/
 │   │   ├── opencode.md          — OpenCode 用 MCP 設定
 │   │   └── omp.md               — OMP 用 MCP 設定
 │   ├── agents/
-│   │   ├── agy-agent.md         — agy CLI ラッパー agent
-│   │   └── opencode-agent.md    — opencode CLI ラッパー agent
+│   │   ├── agy-agent.md         — agy CLI ラッパー agent（非同期・主 agent 専用返却）
+│   │   ├── opencode-agent.md    — opencode CLI ラッパー agent（非同期・主 agent 専用返却）
+│   │   └── plot-agent.md        — 図生成 agent（保留用骨格・未作成）
 │   ├── data/
 │   ├── prompts/
 │   └── ...
