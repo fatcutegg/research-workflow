@@ -106,6 +106,7 @@ resource_counters:
 | TB | 表 | 04/05（表生成時） | CSV ファイル作成時 |
 | LG | ログファイル | 04（学習実行後） | logs/ ファイル作成時 |
 | PS | 発表資料 | 07 | pptx ファイル作成時 |
+| IM | アイデア・メモ | 00（記録時） | research/ideas/ ファイル作成時 |
 
 #### 使用前後確認
 各 stage の Pre-Inspect / Post-Inspect で `resource_counters` の整合性を確認します。
@@ -225,6 +226,7 @@ agent: 「以下の初期化を行います：
 | 「論文を書きたい」「セクションを追加」「文章を直して」 | 06-paper-writing |
 | 「発表資料を作って」「スライドを生成して」 | 07-presentation |
 | 「初期化して」「新しい研究を始めたい」 | 初期化フロー |
+| 「アイデアを記録して」「着想をメモしておいて」 | 00（`research/ideas/` へ IM 発行・討論前の駐車場） |
 | 「subagent を変更したい」 | subagent 設定表示＋agent_platform に応じた説明 |
 | 「MCP を変更したい」「mcp-config を編集」 | research/mcp/ の該当ファイルを参照 |
 | 「今どこ？」「次は？」「状況を確認したい」 | 状態表示のみ |

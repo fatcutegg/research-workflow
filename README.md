@@ -9,7 +9,7 @@ IMU・足圧センサを用いた HAR 研究を想定して設計されていま
 - **Collaborative** — エージェントと対話しながら研究を進める
 - **Spiral** — 螺旋状に実験サイクルを回し、段階的に改善する
 - **Reproducible** — Jupyter Notebook マスターファイル・スナップショット・conda 環境
-- **Traceable** — 全リソースに一意識別子（14 Prefix）
+- **Traceable** — 全リソースに一意識別子（16 Prefix）
 - **Portable** — OpenCode / Claude Code 等の AI coding agent で動作
 
 ## 8 Stage
@@ -112,7 +112,7 @@ research-workflow/
 │   └── ...
 ├── docs/            設計文書
 │   ├── notion-db-design.md         — Notion 3-DB 設計（研究管理・決定記録・実験記録）
-│   └── resources-prefix-table.md   — 全リソース番号体系（14 Prefix、命名ルール）
+│   └── resources-prefix-table.md   — 全リソース番号体系（16 Prefix、命名ルール）
 └── LICENSE
 ```
 
