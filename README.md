@@ -10,7 +10,7 @@ IMU・足圧センサを用いた HAR 研究を想定して設計されていま
 - **Spiral** — 螺旋状に実験サイクルを回し、段階的に改善する
 - **Reproducible** — Jupyter Notebook マスターファイル・スナップショット・conda 環境
 - **Traceable** — 全リソースに一意識別子（16 Prefix）
-- **Portable** — OpenCode / Claude Code 等の AI coding agent で動作
+- **Portable** — OpenCode / OMP / Pi / Claude Code 等の AI coding agent で動作
 
 ## 8 Stage
 
@@ -28,7 +28,8 @@ IMU・足圧センサを用いた HAR 研究を想定して設計されていま
 ## 前提環境
 
 - Python（conda 環境管理）
-- AI coding agent: OpenCode / OMP（Oh My Pi）/ Claude Code 等
+- AI coding agent: OpenCode / OMP（Oh My Pi）/ Pi（badlogic/pi）/ Claude Code 等
+- Pi は `--pi`（`--omp` と同じ `.agents/skills/` にインストール）で対応
 - subagent: agy（マルチモーダル） / opencode（コード生成） / 両方
 
 ### OMP の非同期サブエージェント（推奨設定）

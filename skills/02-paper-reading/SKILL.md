@@ -210,6 +210,9 @@ research/terminology.md
 
 resource_counters の `LN`, `TE`, `EQ` を更新します。
 
+- `LN`: 01 で発行済みの番号を再利用した場合も、counter が発行済み最大番号を指すよう確認・修正する（未登録論文に新規発行した場合のみ max(counter, screening 最大)+1 を発行して更新）
+- `TE` / `EQ`: 新規登録した最大番号に更新する
+
 ---
 
 ## Pre-Inspect（実行前検証）
@@ -217,7 +220,7 @@ resource_counters の `LN`, `TE`, `EQ` を更新します。
 - 読む論文は screening.md に登録済みか
 - PDF ファイルは存在するか（01 の完了条件）
 - 既に精読済みの論文を重複して読もうとしていないか
-- LN 番号は既存と重複していないか（state.yaml の LN counter を確認）
+- LN 番号は screening.md の登録と照合して**再利用**する（タイトル/URL が一致する行の LN を使う）。screening.md に未登録の論文のみ新規発行: `max(counter, screening 最大)+1` とし、screening.md にも行を追加する
 - TE / EQ counter の現在値を確認する
 
 ## Post-Inspect（実行後検証）
@@ -264,6 +267,6 @@ research/state.yaml                  ← TE / EQ / LN counter 更新
 - screening.md の更新なしに次の論文に移ってはならない
 - Part 1（サマリー）を飛ばして Part 2 に進む場合はあなたの了承を得ること
 - 新しい用語を TE 番号なしで terminology.md に登録してはならない
-- resource_counters の確認（Pre-Inspect）なしに新しい番号を発行してはならない
+- screening.md との照合なしに新しい LN 番号を発行してはならない（未登録論文のみ max+1 で発行）
 - resource_counters の更新（Post-Inspect）なしに stage を完了してはならない
 - 外部精読 SKILL が存在する場合、標準精読を強制してはならない（選択肢を提示する）

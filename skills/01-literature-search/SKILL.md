@@ -193,6 +193,7 @@ agent: 「以下の論文をダウンロードします：
 - 重要そうな論文を見落としていないか（あなたが確認）
 - screening.md の記録に漏れはないか
 - 重複して同じ論文を登録していないか
+- **LN 番号を発行した場合、`state.yaml` の `resource_counters.LN` を発行済み最大番号に更新したか**
 
 ## 出力先
 
@@ -202,6 +203,12 @@ research/literature/
 └── papers/
     ├── LN-001-author2025-title.pdf    ← ローカルに存在すること
     └── LN-002-author2025-title.pdf    ← （これが 01 の完了条件）
+```
+
+反映先:
+
+```
+research/state.yaml      ← resource_counters.LN を発行済み最大番号に更新
 ```
 
 ## 次のステップ
