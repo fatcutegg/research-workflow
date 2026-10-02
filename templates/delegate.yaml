@@ -4,9 +4,9 @@
 
 agents:
   agy:
-    command: agy -p "{brief}" --model gemini-3.6-flash-medium --add-dir "{workdir}"
+    command: agy -p "{brief}" --model gemini-3.8-flash-high --add-dir "{workdir}"
     description: マルチモーダル（PDF/図/動画対応）
 
   opencode:
-    command: opencode run "{brief}" --model opencode-go/deepseek-v4-flash --auto
-    description: コード生成（DeepSeek 非マルチモーダル）
+    command: opencode run "{brief}" --model opencode-go/deepseek-v4.1-flash --auto
+    description: コード生成・長文解析（1M ctx、画像対応）

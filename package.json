@@ -1,6 +1,6 @@
 {
   "name": "research-workflow",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "協調型 AI エージェントで進める研究ワークフロー — 8 SKILL.md + templates + CLI",
   "license": "MIT",
   "repository": {
