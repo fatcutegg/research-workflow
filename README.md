@@ -77,6 +77,27 @@ npx research-workflow init --omp --global
 npx research-workflow init --omp --symlink
 ```
 
+### 再リンク / アップグレード（`--force`）
+
+既にインストール済みの場合は **`--force`** を付けると、既存リンクを削除してから再作成します。
+（`--force` なしでは既存リンクは skip され、旧バージョンのまま残ります）
+
+```bash
+# プロジェクト（OpenCode）
+npx research-workflow@latest init --force --symlink
+
+# プロジェクト（OMP / Pi）
+npx research-workflow@latest init --omp --force --symlink
+
+# グローバル（OpenCode / OMP・Pi / Claude Code）
+npx research-workflow@latest init --global --force --symlink
+npx research-workflow@latest init --omp --global --force --symlink
+npx research-workflow@latest init --claude --global --force --symlink
+```
+
+- npx キャッシュが evict されてリンクが壊れた場合も `--force` で再作成できます
+- バージョンアップは `@latest`（または `@x.y.z`）を付けて再実行するだけです
+
 ### 方法 2: install.sh
 
 ```bash
