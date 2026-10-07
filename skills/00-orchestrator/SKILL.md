@@ -49,6 +49,7 @@ experiments/EXP-{番号}/requirements.txt  ← 実験個別（04 が管理）
 - 「\stage名\ をやりたい」（例：「論文を探したい」「実験を考えたい」）
 - 「続きからやる」
 - 「今の状況を確認したい」
+- 「TODO を追加して」「タスクを記録して」
 
 ## 状態管理
 
@@ -62,6 +63,10 @@ current_stage: null
 agent_platform: opencode  # opencode / omp
 status: idle  # idle / discussing / executing / reviewing
 subagent: agy  # 全 stage で使用する subagent（初期化時に指定）
+
+backlog:  # 優先順の次タスク（任意・00 が更新。先頭が最優先）
+  - 前処理パイプラインのレビュー
+  - ベースライン手法の比較実験
 
 experiments:
   - EXP-001-baseline-cnn
@@ -128,6 +133,14 @@ resource_counters:
   - counter 値を実ファイル数と突き合わせる
   - 不整合があれば実ファイル数を優先して修正する
 ```
+
+### バックログ（次タスク）
+
+`backlog` は優先順の次タスク一覧です（先頭が最優先）。
+
+- **記録**: 「TODO を追加して」「タスクを記録して」→ `backlog` へ追記し `last_updated` を更新する
+- **完了**: 完了したタスクは削除する（実施の記録は該当 stage の記録側に残す）
+- **表示**: 状態表示では先頭数件を表示する
 
 ## 初期化フロー
 
@@ -234,6 +247,7 @@ agent: 「以下の初期化を行います：
 | 「発表資料を作って」「スライドを生成して」 | 07-presentation |
 | 「初期化して」「新しい研究を始めたい」 | 初期化フロー |
 | 「アイデアを記録して」「着想をメモしておいて」 | 00（`research/ideas/` へ IM 発行・討論前の駐車場） |
+| 「TODO を追加して」「タスクを記録して」「バックログを確認」 | 00（`state.yaml` の `backlog` 更新・表示） |
 | 「subagent を変更したい」 | subagent 設定表示＋agent_platform に応じた説明 |
 | 「MCP を変更したい」「mcp-config を編集」 | research/mcp/ の該当ファイルを参照 |
 | 「今どこ？」「次は？」「状況を確認したい」 | 状態表示のみ |
@@ -252,6 +266,10 @@ agent: 「以下の初期化を行います：
 subagent: agy / opencode
 実行済み実験: EXP-001（baseline CNN）, EXP-002（attention layer）
 論文の進捗: introduction（下書き完了）, related_work（アウトライン）
+
+バックログ（優先順）:
+1. 前処理パイプラインのレビュー
+2. ベースライン手法の比較実験
 
 次の候補:
 A. 新しい実験を計画する（03-experiment-design）

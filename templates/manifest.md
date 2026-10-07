@@ -16,7 +16,8 @@ Git で管理しないファイル（PDF・実験結果・ログ・PPTX）は外
 | 学習ログ | experiments/EXP-{番号}/logs/ | /{プロジェクト名}/experiments/EXP-{番号}/logs/ | train log |
 | スナップショット | experiments/EXP-{番号}/snapshots/ | /{プロジェクト名}/experiments/EXP-{番号}/snapshots/ | 実行履歴 |
 | 公開データセット | data/raw/{データ名}/ | /{プロジェクト名}/data/raw/ | 公開データのみ（自己収集データは非保存） |
-| 前処理済みデータ | data/processed/EXP-{番号}/ | /{プロジェクト名}/data/processed/EXP-{番号}/ | 匿名化済み |
+| 前処理済みデータ（実験） | data/processed/EXP-{番号}/ | /{プロジェクト名}/data/processed/EXP-{番号}/ | 匿名化済み |
+| 前処理済みデータ（共有） | data/processed/{データセット名}/ | /{プロジェクト名}/data/processed/{データセット名}/ | 複数実験で共用（収集企画単位） |
 | PPTX | presentations/{mode}-{日付}.pptx | /{プロジェクト名}/presentations/ | 発表資料 |
 
 ## ルール
@@ -24,4 +25,5 @@ Git で管理しないファイル（PDF・実験結果・ログ・PPTX）は外
 - Git 管理外ファイルは `.gitignore` に記載する
 - 各 stage 完了時（Post-Inspect 後）に該当ファイルを外部ストレージにアップロードする
 - アップロードしたら manifest.md の該当行にアップロード日を追記する
+- 複数実験で共用する前処理データは `data/processed/{データセット名}/` に置く（例: 収集日付・タスク名）
 - プライバシーに関わるデータ（被験者情報等）は外部ストレージにも保存せず、ローカルのみで管理する

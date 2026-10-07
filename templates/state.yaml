@@ -7,6 +7,8 @@ agent_platform: opencode  # opencode / omp
 status: idle  # idle / discussing / executing / reviewing
 subagent: agy
 
+backlog: []  # 優先順の次タスク（00 が更新。先頭が最優先）
+
 experiments: []
 
 paper_status:

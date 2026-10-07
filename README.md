@@ -8,7 +8,7 @@ IMU・足圧センサを用いた HAR 研究を想定して設計されていま
 - **8 stage** — 文献検索（01）から発表資料作成（07）までをカバー
 - **Collaborative** — エージェントと対話しながら研究を進める
 - **Spiral** — 螺旋状に実験サイクルを回し、段階的に改善する
-- **Reproducible** — Jupyter Notebook マスターファイル・スナップショット・conda 環境
+- **Reproducible** — notebook／CLI ツールのマスターファイル・実行記録・conda 環境
 - **Traceable** — 全リソースに一意識別子（16 Prefix）
 - **Portable** — OpenCode / OMP / Pi / Claude Code 等の AI coding agent で動作
 
@@ -20,10 +20,28 @@ IMU・足圧センサを用いた HAR 研究を想定して設計されていま
 | 01 | literature-search | 論文検索・スクリーニング・PDF 取得 |
 | 02 | paper-reading | subagent 要約 + 研究関連性精読 |
 | 03 | experiment-design | 実験計画・討論・合意記録 |
-| 04 | experiment-code | ipynb 実装・subagent 実行・スナップショット |
+| 04 | experiment-code | 実装（ipynb／CLI ツール）・実行委譲・実行記録 |
 | 05 | results-analysis | 比較・可視化・分析サマリー |
 | 06 | paper-writing | インクリメンタル LaTeX 執筆 |
 | 07 | presentation | 進捗発表 / 学会発表 資料作成 |
+
+## 実装方式（実験タイプ別）
+
+04-experiment-code は実験タイプに応じて実装方式を選択します：
+
+| タイプ | 正本 | 用途 |
+|:-------|:-----|:-----|
+| 訓練型 | ipynb | モデル訓練・評価（全セル実行 → スナップショット） |
+| 解析ツール型 | CLI ツール（`.py`） | データ処理・校正・比較評価・統計（冪等・単命令で再実行。安定後に `experiment.ipynb` をインタラクティブデモとして作成） |
+| 混合型 | ipynb + `tools/` | notebook から再利用モジュールを呼び出す |
+
+## その他の規約
+
+- **バックログ** — `research/state.yaml` の `backlog` に優先順の次タスクを記録（00-orchestrator が更新）
+- **マルチマシン引き継ぎ** — 実行を別マシンに委譲する場合、`templates/handover.md` を雛形に引き継ぎ書を作成する
+- **注釈（アノテーション）** — 人手で確定した注釈は Git 管理とし、来歴（裁定者・日付・手順版）を記録する（`templates/data/manifest-data.md`）
+- **共有データセット** — 複数実験で共用する前処理データは `data/processed/{データセット名}/`（`templates/manifest.md`）
+- **図** — ipynb・スクリプトのいずれでも生成可。FG 番号を発行し、論文用は PNG + PDF を推奨
 
 ## 前提環境
 
@@ -101,6 +119,7 @@ research-workflow/
 │   ├── state.yaml
 │   ├── delegate.yaml
 │   ├── manifest.md
+│   ├── handover.md             — マルチマシン引き継ぎ書の雛形
 │   ├── mcp/
 │   │   ├── opencode.md          — OpenCode 用 MCP 設定
 │   │   └── omp.md               — OMP 用 MCP 設定
