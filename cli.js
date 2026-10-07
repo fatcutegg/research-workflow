@@ -13,17 +13,18 @@ research-workflow — 協調型 AI エージェントで進める研究ワーク
 
 使用方法:
   npx research-workflow init                    .opencode/skills/ にインストール（OpenCode）
-  npx research-workflow init --omp              .agents/skills/ にインストール（OMP / Pi 共用）
-  npx research-workflow init --pi               --omp と同じ（Pi 用エイリアス）
+  npx research-workflow init --omp              .agents/skills/ + .omp/agents/ にインストール（OMP）
+  npx research-workflow init --pi               .pi/skills/ にインストール（Pi）
   npx research-workflow init --claude           .claude/skills/ にインストール（Claude Code）
   npx research-workflow init --global           ~/.config/opencode/skills/ にインストール
-  npx research-workflow init --omp --global     ~/.agents/skills/ にインストール（OMP / Pi 全ユーザー）
+  npx research-workflow init --omp --global     ~/.agents/skills/ にインストール（OMP 準拠位置）
+  npx research-workflow init --pi --global      ~/.pi/agent/skills/ にインストール（Pi）
   npx research-workflow init --claude --global  ~/.claude/skills/ にインストール
   npx research-workflow help                    このヘルプを表示
 
 オプション:
-  --omp      OMP (Oh My Pi) 用にインストール（.agents/skills/）
-  --pi       Pi (badlogic/pi) 用エイリアス（--omp と同じ .agents/skills/）
+  --omp      OMP (Oh My Pi) 用にインストール（.agents/skills/ + .omp/agents/）
+  --pi       Pi (badlogic/pi) 用にインストール（.pi/skills/・~/.pi/agent/skills/）
   --claude   Claude Code 用にインストール（.claude/skills/）
   --symlink  コピーではなくシンボリックリンクを作成
   --force    既存のファイルを上書き（旧リンクを削除して再作成）
@@ -48,6 +49,7 @@ async function targetDir(mode, target) {
   if (mode === 'global') {
     if (target === 'agents') return join(home, '.agents', 'skills');
     if (target === 'claude') return join(home, '.claude', 'skills');
+    if (target === 'pi') return join(home, '.pi', 'agent', 'skills');
     return join(home, '.config', 'opencode', 'skills');
   }
   const cwd = process.cwd();
@@ -58,6 +60,11 @@ async function targetDir(mode, target) {
   }
   if (target === 'claude') {
     const dir = join(cwd, '.claude');
+    if (!existsSync(dir)) await mkdir(dir, { recursive: true });
+    return join(dir, 'skills');
+  }
+  if (target === 'pi') {
+    const dir = join(cwd, '.pi');
     if (!existsSync(dir)) await mkdir(dir, { recursive: true });
     return join(dir, 'skills');
   }
@@ -101,7 +108,7 @@ async function cmdInit(flags) {
   const useSymlink = flags.includes('--symlink');
   const force = flags.includes('--force');
 
-  const target = isClaude ? 'claude' : isOmp || isPi ? 'agents' : 'opencode';
+  const target = isClaude ? 'claude' : isPi ? 'pi' : isOmp ? 'agents' : 'opencode';
 
   if (!existsSync(SKILLS_SRC)) {
     console.error(`error: skills/ not found at ${SKILLS_SRC}`);
@@ -118,6 +125,7 @@ async function cmdInit(flags) {
   const locationMap = {
     agents: mode === 'global' ? '~/.agents/skills/' : '.agents/skills/',
     claude: mode === 'global' ? '~/.claude/skills/' : '.claude/skills/',
+    pi: mode === 'global' ? '~/.pi/agent/skills/' : '.pi/skills/',
     opencode: mode === 'global' ? '~/.config/opencode/skills/' : '.opencode/skills/',
   };
   console.log(`\n${skillCount} skill(s) installed to ${locationMap[target]}`);

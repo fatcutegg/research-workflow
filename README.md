@@ -47,7 +47,7 @@ IMU・足圧センサを用いた HAR 研究を想定して設計されていま
 
 - Python（conda 環境管理）
 - AI coding agent: OpenCode / OMP（Oh My Pi）/ Pi（badlogic/pi）/ Claude Code 等
-- Pi は `--pi`（`--omp` と同じ `.agents/skills/` にインストール）で対応
+- Pi は `--pi`（`.pi/skills/`・`~/.pi/agent/skills/`）で対応
 - subagent: agy（マルチモーダル） / opencode（コード生成） / 両方
 
 ### OMP の非同期サブエージェント（推奨設定）
@@ -69,13 +69,32 @@ npx research-workflow init
 # OMP 用（.agents/skills/ + .omp/agents/）
 npx research-workflow init --omp
 
-# グローバル
+# Pi 用（.pi/skills/）
+npx research-workflow init --pi
+
+# Claude Code 用（.claude/skills/）
+npx research-workflow init --claude
+
+# グローバル（OpenCode / OMP / Pi / Claude Code）
 npx research-workflow init --global
 npx research-workflow init --omp --global
+npx research-workflow init --pi --global
+npx research-workflow init --claude --global
 
 # シンボリックリンク
 npx research-workflow init --omp --symlink
 ```
+
+インストール先の一覧:
+
+| フラグ | プロジェクト | グローバル |
+|:-------|:-------------|:-----------|
+| （なし）OpenCode | `.opencode/skills/` | `~/.config/opencode/skills/` |
+| `--pi` Pi | `.pi/skills/` | `~/.pi/agent/skills/` |
+| `--omp` OMP | `.agents/skills/` + `.omp/agents/` | `~/.agents/skills/` |
+| `--claude` Claude Code | `.claude/skills/` | `~/.claude/skills/` |
+
+> `.agents/skills/` は Agent Skills 標準の互換位置で、OpenCode・Pi・OMP など複数ツールから共通に読まれます。Pi はネイティブ位置（`.pi/skills/`・`~/.pi/agent/skills/`）も探索します。
 
 ### 再リンク / アップグレード（`--force`）
 
@@ -86,11 +105,13 @@ npx research-workflow init --omp --symlink
 # プロジェクト（OpenCode）
 npx research-workflow@latest init --force --symlink
 
-# プロジェクト（OMP / Pi）
+# プロジェクト（Pi / OMP）
+npx research-workflow@latest init --pi --force --symlink
 npx research-workflow@latest init --omp --force --symlink
 
-# グローバル（OpenCode / OMP・Pi / Claude Code）
+# グローバル（OpenCode / Pi / OMP / Claude Code）
 npx research-workflow@latest init --global --force --symlink
+npx research-workflow@latest init --pi --global --force --symlink
 npx research-workflow@latest init --omp --global --force --symlink
 npx research-workflow@latest init --claude --global --force --symlink
 ```

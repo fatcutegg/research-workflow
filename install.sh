@@ -5,6 +5,7 @@
 # Usage:
 #   curl -fsSL https://raw.githubusercontent.com/fatcutegg/research-workflow/main/install.sh | bash
 #   curl -fsSL https://raw.githubusercontent.com/.../install.sh | bash -s -- --omp
+#   curl -fsSL https://raw.githubusercontent.com/.../install.sh | bash -s -- --pi
 #
 
 set -euo pipefail
@@ -12,14 +13,17 @@ set -euo pipefail
 REPO="https://github.com/fatcutegg/research-workflow.git"
 USE_SYMLINK=false
 IS_OMP=false
+IS_PI=false
 
 for arg in "$@"; do
   case "$arg" in
     --symlink) USE_SYMLINK=true ;;
     --omp) IS_OMP=true ;;
+    --pi) IS_PI=true ;;
     --help|-h)
       echo "Usage: curl ... | bash"
       echo "       curl ... | bash -s -- --omp"
+      echo "       curl ... | bash -s -- --pi"
       echo "       curl ... | bash -s -- --symlink"
       echo ""
       echo "Installs research-workflow SKILL.md files"
@@ -29,6 +33,8 @@ done
 
 if [ "$IS_OMP" = true ]; then
   TARGET="${HOME}/.agents/skills"
+elif [ "$IS_PI" = true ]; then
+  TARGET="${HOME}/.pi/agent/skills"
 else
   TARGET="${HOME}/.config/opencode/skills"
 fi
@@ -89,6 +95,8 @@ fi
 echo ""
 if [ "$IS_OMP" = true ]; then
   echo "OMP users: enable agents project skills in your config."
+elif [ "$IS_PI" = true ]; then
+  echo "Pi discovers skills in ${TARGET} automatically."
 else
   echo "Add the following to opencode.json if not already present:"
   echo '  "skills": ["~/.config/opencode/skills"]'
