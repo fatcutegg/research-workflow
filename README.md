@@ -42,6 +42,77 @@ IMU・足圧センサを用いた HAR 研究を想定して設計されていま
 - **注釈（アノテーション）** — 人手で確定した注釈は Git 管理とし、来歴（裁定者・日付・手順版）を記録する（`templates/data/manifest-data.md`）
 - **共有データセット** — 複数実験で共用する前処理データは `data/processed/{データセット名}/`（`templates/manifest.md`）
 - **図** — ipynb・スクリプトのいずれでも生成可。FG 番号を発行し、論文用は PNG + PDF を推奨
+- **資源制約** — CPU / GPU 使用率 ≤ 70%・並列 2〜3・各タスク 2 スレッド・`nice -n 10`・夜間は 1 タスク以下（00-orchestrator）
+- **subagent 委託** — fresh context を既定・brief に実行マシンを明記・30 分超は timeout と逐次書き出し（00-orchestrator）
+- **用語** — `research/terminology.md` に TE-ID で登録。略語は必須、誤解を招く定義には警告（00 / 02）
+- **版管理** — 発表資料は上書きせず `-v{n}` で増やす（07-presentation）
+
+## v0.5.0 の変更点（2026-10）
+
+**破壊的変更**: 07-presentation の生成ツールを「Anthropic PPTX skill」から **`power-pptx`** に変更しました（Anthropic PPTX skill は現存せず、指定自体が誤りでした）。
+
+### 07-presentation
+
+- **生成ツール** — `power-pptx`（`pip install power-pptx`・**import 名は `power_pptx`**）に変更。表・図・日本語フォント・`space-aware authoring` に対応
+- **フォールバック** — 導入できない環境では標準ライブラリ（`zipfile` + 手書き OOXML）で直接生成する手順を明記
+- **他ツールの評価を併記** — Pandoc（数式のバグ #9465 / #11483 / #6301）・Touying（`typ2pptx` は条件付き、`touying-exporter` は PNG 画像化）・Marp / reveal.js / Slidev（pptx は画像化）
+- **Post-Inspect の具体化** — 豆腐（`.notdef` との描画比較）・はみ出し（実グリフ幅で折り返し行数を推定し枠高と比較）・ブロック重なり・タイトル／出典の有無・枚数・zip 整合（XML parse / rels 解決）の 6 項目
+- **progress-long モード** — 30 分組会向け（15-25 枚）を追加
+- **express モード** — 討論前の草稿生成を許可（**草稿は最終版とみなさない**）。HARD-GATE に例外を明記
+- **バッチ討論** — 逐頁ではなく **3〜5 枚を 1 バッチ**で確認
+- **デフォルトテーマ** — テンプレート未選択時は 16:9・游ゴシック／ヒラギノ・タイトル 32pt・本文 18-20pt・アクセント 1 色・出典フッター
+- **版管理（上書き禁止）** — `{mode}-{date}-{desc}-v{n}.pptx`。既存ファイルを上書きせず、生成スクリプトも版ごとに残す。最新版は版台帳（`research/presentations/README.md` または `manifest.md`）に明示
+- **Pre-Inspect にツール検査** — `python -c "import power_pptx"` を通す
+
+### 00-orchestrator
+
+- **資源制約** — CPU / GPU 使用率 ≤ 70%・並列 2〜3・各タスク 2 スレッド・`nice -n 10`・夜間は 1 タスク以下
+- **subagent への委託プロトコル** — fresh context を既定（fork は明示時のみ）・brief の必須項目（**実行マシン**を含む）・30 分超は timeout と逐次書き出し・timeout 時は推定所要時間の 1.5 倍で再実行・反引号禁止
+- **用語登録（TE）の運用** — `research/terminology.md` に TE-ID 連番。略語は必ず登録。誤解を招く定義には警告（例: OOF を主指標にしない・yaw は俯身角ではない）
+- **同梱チェッカー** — `skills/00-orchestrator/scripts/check-no-backticks.sh`（workflow スクリプトの反引号を検出）
+
+## 移行方法（v0.4.2 → v0.5.0）
+
+### 1. スキルの更新
+
+npx で入れた場合（npx キャッシュは更新で消えるため `--force` を付ける）:
+
+```bash
+npx research-workflow@0.5.0 init --pi --global --force --symlink
+```
+
+clone で入れた場合（以後の編集を即反映させるため、**リンク先を clone へ向け直す**）:
+
+```bash
+cd ~/Projects/research-workflow
+git pull
+
+# 既存リンクの記録（バックアップ代わり）
+ls -la ~/.pi/agent/skills/
+
+# 8 本すべてを clone 先へ張り直す
+for d in ~/Projects/research-workflow/skills/*/; do
+  ln -sfn "${d%/}" "$HOME/.pi/agent/skills/$(basename "$d")"
+done
+ls -la ~/.pi/agent/skills/
+```
+
+### 2. 生成ツールの導入（07-presentation）
+
+```bash
+conda run -n research-{プロジェクト名} pip install power-pptx
+python -c "import power_pptx; print(power_pptx.__version__)"
+```
+
+**import 名は `power_pptx`**（`pptx` ではない）。導入できない場合は 07-presentation のフォールバック（標準ライブラリで OOXML 直接生成）を使う。
+
+### 3. 既存プロジェクトの追従
+
+- `research/requirements.txt` に `power-pptx` を追加する
+- 発表資料は**上書きせず版番号で増やす**運用に切り替える（`-v1`, `-v2` …）。最新版は `research/presentations/README.md` に記録する
+- `research/terminology.md` に略語（OOF・yaw 等）を登録し、誤用注意を書く
+- subagent を使う場合、`defaultSubagentContext: "fresh"` を設定する
+- 旧 07 が指定していた Anthropic PPTX skill への依存は削除する（参照しても生成できない）
 
 ## 前提環境
 
@@ -156,6 +227,8 @@ AI coding agent を起動し、`「新しい研究を始めたい」` と話し�
 ```
 research-workflow/
 ├── skills/          8 SKILL.md（00-orchestrator 〜 07-presentation）
+│   └── 00-orchestrator/scripts/
+│       └── check-no-backticks.sh  — workflow スクリプトの反引号チェッカー
 ├── templates/       プロジェクト初期化用雛形
 │   ├── .gitignore
 │   ├── state.yaml

@@ -7,3 +7,7 @@ matplotlib
 scikit-learn
 jupyter
 ipykernel
+
+# 07-presentation 用（任意）: 導入できない場合は標準ライブラリで OOXML を直接生成する
+# フォールバックを使う（skills/07-presentation/SKILL.md を参照）
+# power-pptx
