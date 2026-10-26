@@ -119,7 +119,7 @@ python -c "import power_pptx; print(power_pptx.__version__)"
 - Python（conda 環境管理）
 - AI coding agent: OpenCode / OMP（Oh My Pi）/ Pi（badlogic/pi）/ Claude Code 等
 - Pi は `--pi`（`.pi/skills/`・`~/.pi/agent/skills/`）で対応
-- subagent: agy（マルチモーダル） / opencode（コード生成） / 両方
+- subagent: agy（マルチモーダル） / opencode（コード生成） / 両方 — 実体はプラットフォーム別に写像（opencode: `agy -p` / omp: `agy-agent` / **pi: `agy-flash-high`・`agy-argon-high`**、詳細は `skills/00-orchestrator/SKILL.md`「subagent の写像」）
 
 ### OMP の非同期サブエージェント（推奨設定）
 

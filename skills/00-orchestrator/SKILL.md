@@ -81,7 +81,7 @@ last_updated: 2026-07-29
 current_stage: null
 agent_platform: opencode  # opencode / omp
 status: idle  # idle / discussing / executing / reviewing
-subagent: agy  # 全 stage で使用する subagent（初期化時に指定）
+subagent: agy  # 全 stage で使用する subagent（論理名。実体は下の「subagent の写像」で解決）
 
 backlog:  # 優先順の次タスク（任意・00 が更新。先頭が最優先）
   - 前処理パイプラインのレビュー
@@ -112,6 +112,18 @@ resource_counters:
 ```
 
 `paper_status` と `resource_counters` は各 stage SKILL が必要に応じて更新します。
+
+### subagent の写像（プラットフォーム別）
+
+`state.yaml` の `subagent` は**論理名**（`agy` / `opencode`）で保持し、実体はプラットフォームごとに写像します。
+
+| agent_platform | `agy` の実体 | `opencode` の実体 |
+|---|---|---|
+| opencode | `agy -p` / agy MCP | `opencode run` |
+| omp | `task({agent: "agy-agent"})` | `task({agent: "opencode-agent"})` |
+| **pi** | **`agy-flash-high`（既定）/ `agy-argon-high`（深い推論）/ `agy-manager`（統括）** | `delegate`（親モデルを継承） |
+
+> pi の旧 agent `agy` / `agy-gemini`（external-cli で `localAI/bin/agy-run` → agy CLI を叩くラッパー）は 2026-10-25 に廃止した。ACP 経由の `agy-*` に置き換わっており、旧名で派発すると「disabled / did you mean」で別 agent に流れるので注意。`agy-run` 自体は `paper-process --engine agy` が使うので残す。
 
 ### リソース番号管理
 
@@ -218,6 +230,7 @@ agent: 「以下の初期化を行います：
      現在の設定:
        - omp → task tool + agy-agent / opencode-agent（task の子 session が delegate CLI を呼ぶ）
        - opencode → agy CLI（agy -p / agy MCP）
+       - pi → agy-flash-high / agy-argon-high（Antigravity ACP。外部 CLI ラッパーではない）
      デフォルト: opencode（変更する場合は agent 名を教えてください）
      そのまま進めて良いですか？」
 
@@ -228,6 +241,7 @@ agent: 「以下の初期化を行います：
    agent_platform に応じて subagent の発行方法が変わります：
    - omp → task({agent: "agy-agent"}) または task({agent: "opencode-agent"})
    - opencode → agy -p または opencode run
+   - pi → subagent({agent: "agy-flash-high"})（深い推論は agy-argon-high）
 
    利用可能な MCP ツールを確認しています...
     
@@ -305,8 +319,8 @@ agent: 「以下の初期化を行います：
 現在の状況をお伝えします。
 
 進行中: （なし／討論中／実行中）
-プラットフォーム: opencode / omp
-subagent: agy / opencode
+プラットフォーム: opencode / omp / pi
+subagent: agy / opencode（pi では agy-flash-high / agy-argon-high）
 実行済み実験: EXP-001（baseline CNN）, EXP-002（attention layer）
 論文の進捗: introduction（下書き完了）, related_work（アウトライン）
 

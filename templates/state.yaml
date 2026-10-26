@@ -3,9 +3,9 @@
 
 last_updated: {YYYY-MM-DD}
 current_stage: null
-agent_platform: opencode  # opencode / omp
+agent_platform: opencode  # opencode / omp / pi
 status: idle  # idle / discussing / executing / reviewing
-subagent: agy
+subagent: agy  # 論理名。実体は SKILL.md「subagent の写像」を参照（pi: agy-flash-high / agy-argon-high）
 
 backlog: []  # 優先順の次タスク（00 が更新。先頭が最優先）
 
