@@ -47,6 +47,15 @@ IMU・足圧センサを用いた HAR 研究を想定して設計されていま
 - **用語** — `research/terminology.md` に TE-ID で登録。略語は必須、誤解を招く定義には警告（00 / 02）
 - **版管理** — 発表資料は上書きせず `-v{n}` で増やす（07-presentation）
 
+## v0.5.1 の変更点（2026-10）
+
+ドキュメントのみの修正です（スキルの手順そのものは変わりません）。
+
+- **`subagent` の論理名と実体の写像を明記** — `state.yaml` の `subagent: agy` は**論理名**とし、`skills/00-orchestrator/SKILL.md` に「subagent の写像（プラットフォーム別）」表を追加。`opencode` → `agy -p` / `omp` → `task({agent:"agy-agent"})` / **`pi` → `agy-flash-high`（既定）・`agy-argon-high`（深い推論）・`agy-manager`（統括）**
+- **`agent_platform` に `pi` を追加** — 初期化の質疑と状態報判に `pi` を追加（従来は `opencode` / `omp` の 2 択だった）
+- **廃止 agent の注意書き** — pi 側の旧 `agy` / `agy-gemini`（external-cli で `localAI/bin/agy-run` → agy CLI を叩くラッパー）は 2026-10-25 に廃止。ACP 経由の `agy-*` に置き換わっている。旧名で派発すると「disabled / did you mean」で別 agent に流れ、**表示モデルは既定値（deepseek）のまま実体は Gemini** という紛らわしい状態になる
+- `templates/state.yaml` の `subagent` に「論理名である」旨のコメントを追加
+
 ## v0.5.0 の変更点（2026-10）
 
 **破壊的変更**: 07-presentation の生成ツールを「Anthropic PPTX skill」から **`power-pptx`** に変更しました（Anthropic PPTX skill は現存せず、指定自体が誤りでした）。
